@@ -8,7 +8,7 @@
 	<body>
 		<nav>
 			<ul>
-				
+				<li><a href="./views/view_card.php" >Carte</a></li>
 			</ul>
 		</nav>
 
@@ -27,6 +27,8 @@
             </button>
 
         </form>
+
+
         </main>
 </body>
 </html>

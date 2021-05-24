@@ -1,5 +1,7 @@
 <?php
 
+require_once('../model/sparqllib.php');
+
 class Model
 {
     private $db;
@@ -11,8 +13,6 @@ class Model
     private static $instance = null;
 
     private function __construct() {
-        echo('hey');
-
         try {
             include('../utils/credentials.php');
             $this->bd_ville = new PDO($dsn, $login, $mdp);
@@ -96,7 +96,7 @@ class Model
             ?focus rdfs:label ?Nom_Lieu .
             ?focus geo:lat ?Latitude .
             ?focus geo:long ?Longitude
-            } LIMIT 50";
+            } LIMIT 500";
         
         $result = sparql_query( $request );
         if( !$result ) { print sparql_errno() . ": " . sparql_error(). "\n"; exit; }

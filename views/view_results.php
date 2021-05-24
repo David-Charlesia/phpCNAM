@@ -21,6 +21,7 @@ if(isset($_GET['city']) && $bd->verify_city($_GET['city'])){
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin=""/>
 		<link rel="stylesheet" href="../contents/css/results.css"/>
+      <link rel="stylesheet" href="../contents/css/map.css"/>
 	</head>
 	<body>
 		<nav>
@@ -48,7 +49,7 @@ if(isset($_GET['city']) && $bd->verify_city($_GET['city'])){
 
         while( $row = sparql_fetch_array( $results ) ){
             //$row['Titre']='tesssssssssssst';
-           $marker_js= $marker_js."L.marker([".$row['Latitude'].", ".$row['Longitude']."]).addTo(mymap).bindPopup('<h2>Titre : ".addslashes($row['Titre'])."</h2><h3>Lieu : ".$row['Nom_Lieu']."</h3><h3>Date : ".$row['Date']."</h3><a href=".$row['Spectacle'].">Lien</a>');";
+           // $marker_js= $marker_js."L.marker([".$row['Latitude'].", ".$row['Longitude']."]).addTo(mymap).bindPopup('<h2>Titre : ".addslashes($row['Titre'])."</h2><h3>Lieu : ".$row['Nom_Lieu']."</h3><h3>Date : ".$row['Date']."</h3><a href=".$row['Spectacle'].">Lien</a>');";
 
            print"<tr>";
            print "<td><a href=".$row['Spectacle'].">Lien</a></td>";
@@ -57,19 +58,19 @@ if(isset($_GET['city']) && $bd->verify_city($_GET['city'])){
            print "<td>".$row['focus']."</td>";
            print "<td>".$row['Nom_Lieu']."</td>";
            print"</tr>";
-           /*
-           print "<tr>";
-           foreach( $fields as $field )
-           {
-              print "<td>$row[$field]</td>";
-           }
-           print "</tr>";
-           */
+           $marker_js= $marker_js."L.marker([".$row['Latitude'].", ".$row['Longitude']."]).addTo(mymap).bindPopup('<h2>Titre : ".addslashes($row['Titre'])."</h2><h3>Lieu : ".addslashes($row['Nom_Lieu'])."</h3><h3>Date : ".addslashes($row['Date'])."</h3><a href=".addslashes($row['Spectacle']).">Lien</a>');";
         }
         print "</table>";
 
         ?>
 
+        <div id="mapid">
+
+      </div>
+
         <?php 
-         require('./map.php');
+            require('./map.php');
         ?>
+      </main>
+   </body>
+</html>

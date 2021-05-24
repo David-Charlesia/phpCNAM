@@ -6,7 +6,6 @@ crossorigin=""></script>
 
 <?php 
     if(!isset($marker_js)){
-        print ("heyyyyyyyyyyyyyyyyyyyyyyyyy");
         require_once('../model/Model.php');
         $bd = Model::getModel(); 
 

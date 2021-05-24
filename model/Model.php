@@ -103,6 +103,15 @@ class Model
 
         return $result;
     }
+
+    public function my_in_array($object, $array) {
+        foreach ($array as $item) {
+            if($item[0] == $object[0] && $item[1] == $object[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
     
 }
 

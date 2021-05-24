@@ -3,7 +3,7 @@ require_once("../model/sparqllib.php");
 require_once("../model/Model.php");
 
 $bd = Model::getModel();
-if(isset($_GET['city']) && $bd->verify_city($_GET['city'])){
+if(isset($_GET['city']) /*&& $bd->verify_city($_GET['city'])*/){
     $city = $_GET['city'];
     $results = $bd->doRequest($city);
 }else{
@@ -46,6 +46,9 @@ if(isset($_GET['city']) && $bd->verify_city($_GET['city'])){
 
 
         $marker_js = "";
+        $temp = "";
+        $tab=[];
+        $tab_temp=[];
 
         while( $row = sparql_fetch_array( $results ) ){
             //$row['Titre']='tesssssssssssst';
@@ -58,9 +61,25 @@ if(isset($_GET['city']) && $bd->verify_city($_GET['city'])){
            print "<td>".$row['focus']."</td>";
            print "<td>".$row['Nom_Lieu']."</td>";
            print"</tr>";
-           $marker_js= $marker_js."L.marker([".$row['Latitude'].", ".$row['Longitude']."]).addTo(mymap).bindPopup('<h2>Titre : ".addslashes($row['Titre'])."</h2><h3>Lieu : ".addslashes($row['Nom_Lieu'])."</h3><h3>Date : ".addslashes($row['Date'])."</h3><a href=".addslashes($row['Spectacle']).">Lien</a>');";
+
+           
+            if($bd->my_in_array(array($row['Latitude'], $row['Longitude']),$tab_temp)){
+                $pos = array_search(array($row['Latitude'], $row['Longitude']),$tab_temp);
+                $tab[$pos] = $tab[$pos]."<li><div><h2>Titre : ".addslashes($row['Titre'])."</h2><h3>Lieu : ".addslashes($row['Nom_Lieu'])."</h3><h3>Date : ".addslashes($row['Date'])."</h3><a href=\'".addslashes($row['Spectacle'])."\'>Lien</a></div></li>";
+            }else{
+                array_push($tab, "L.marker([".$row['Latitude'].", ".$row['Longitude']."]).addTo(mymap).bindPopup('<ul class=\"mypopup\"><li><div><h2>Titre : ".addslashes($row['Titre'])."</h2><h3>Lieu : ".addslashes($row['Nom_Lieu'])."</h3><h3>Date : ".addslashes($row['Date'])."</h3><a href=\'".addslashes($row['Spectacle'])."\'>Lien</a></div></li>");
+                array_push($tab_temp, array($row['Latitude'], $row['Longitude']));
+            }
+
+        
+
+           //$marker_js= $marker_js."L.marker([".$row['Latitude'].", ".$row['Longitude']."]).addTo(mymap).bindPopup('<h2>Titre : ".addslashes($row['Titre'])."</h2><h3>Lieu : ".addslashes($row['Nom_Lieu'])."</h3><h3>Date : ".addslashes($row['Date'])."</h3><a href=".addslashes($row['Spectacle']).">Lien</a>');";
         }
         print "</table>";
+
+        foreach ($tab as $value) {
+         $marker_js = $marker_js.$value."</ul>');";
+     }
 
         ?>
 

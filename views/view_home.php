@@ -8,7 +8,9 @@
 	<body>
 		<nav>
 			<ul>
+				<li><a href="./views/view_search.php" >Page de recherche</a></li>
 				<li><a href="./views/view_card.php" >Carte</a></li>
+				<li><a href="./views/view_search.php">Se connecter/Créer un compte</a></li>
 			</ul>
 		</nav>
 

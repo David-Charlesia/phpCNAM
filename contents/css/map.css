@@ -1,3 +1,7 @@
 #mapid{
     height: 75vh;
 }
+.mypopup{
+    max-height: 40em;
+    overflow: auto;
+}

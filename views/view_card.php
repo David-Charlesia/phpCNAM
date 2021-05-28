@@ -1,3 +1,8 @@
+<?php 
+	require('../model/Model.php');
+	require('../model/sparqllib.php');
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>

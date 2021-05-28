@@ -1,11 +1,12 @@
 <?php
 
-require_once('../model/sparqllib.php');
+
 
 class Model
 {
     private $db;
     private $bd_ville;
+    private $bd_account;
 
     /**
      * Attribut statique qui contiendra l'unique instance de Model
@@ -14,9 +15,12 @@ class Model
 
     private function __construct() {
         try {
-            include('../utils/credentials.php');
+            include('credentials.php');
             $this->bd_ville = new PDO($dsn, $login, $mdp);
             $this->bd_ville->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $this->bd_account = new PDO($dnsAccount, $login, $mdp);
+            $this->bd_account->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die('Echec connexion, erreur n°' . $e->getCode() . ':' . $e->getMessage());
         }
@@ -112,7 +116,26 @@ class Model
         }
         return false;
     }
-    
+
+    public function connect($pseudo, $pwd){
+        if($pwd!=='admin'){
+            $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+        }
+
+        $req = $this->bd_account->prepare('SELECT * FROM accountPHPCNAM WHERE pseudo = :pseudo AND pwd = :pwd');
+        $req->bindValue(':pseudo',$pseudo);
+        $req->bindValue(':pwd',$pwd);
+        $req->execute();
+        $result = $req->fetch(PDO::FETCH_ASSOC);
+        if(isset($result['pseudo'])){
+            $_SESSION['id'] = $result['id'];
+            $_SESSION['pseudo'] = $result['pseudo'];
+            $_SESSION['email'] = $result['email'];
+            $_SESSION['privilege'] = $result['privilege'];
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>

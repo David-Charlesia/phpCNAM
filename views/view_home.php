@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8"/>
-		<title> PHP CNAM</title>
+		<title>Connexion/Créer son compte</title>
 		<link rel="stylesheet" href="./contents/css/phpcnam.css"/>
 	</head>
 	<body>
@@ -10,13 +10,14 @@
 			<ul>
 				<li><a href="./views/view_search.php" >Page de recherche</a></li>
 				<li><a href="./views/view_card.php" >Carte</a></li>
-				<li><a href="./views/view_search.php">Se connecter/Créer un compte</a></li>
+				<li><a href="./views/view_signin.html">Se connecter/Créer un compte</a></li>
 			</ul>
 		</nav>
 
 		<header>
 			<h1><a href="?"> PHP CNAM </a></h1>
             <h2>Site de recherche de spectacle</h2>
+			<p>Bienvenue <?= $_SESSION['pseudo']?></p>
 		</header>
 
 		<main>
